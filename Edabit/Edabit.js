@@ -42,37 +42,91 @@ Create a function that takes an argument time and returns the shortest amount of
 to set the given time on the microwave oven. The microwave oven timer always starts at 00:00.
 */
 function microwaveButtons(time) {
-  //check if there are minuts or not
   let steps = 0;
   const arr = time.split(':')
-  if (arr[0] !== '00'){
-      arr[0] = parseFloat(arr[0])
-      if (arr[0] === 1){
-          steps = 2
-      }
-      if (arr[0] > 9){
-          steps = 4
-      }
-      else if (arr[0] <= 9 && arr[0] !== 1){
-          steps = 3
-      }
-  }
-  else{
-      if (arr[1] === '00'){
-          steps = 0
-      }
-      else if (arr[1] === '30'){
-          steps = 1
-      }
-      else{
-          steps = 2
-      }
-  }
-
-  //the +1 is for the start button
-  return steps+1
+	//no miuts
+	if (arr[1] !== '00' && arr[0] === '00'){
+		if (arr[1] === '30'){
+		steps = 1
+	  }
+		if (parseFloat(arr[1]) > 30 || parseFloat(arr[1]) < 30){
+            steps = 2
+		}
+	}
+	if (arr[0] !== '00'){
+        if (parseInt(arr[0]) === 1){
+            steps = 2
+        }
+		if (parseFloat(arr[0]) < 10 && parseInt(arr[0]) > 1){
+            steps = 3
+		}
+		else if (parseInt(arr[0]) >= 10){
+			steps = 4
+		}
+    }
+    else if (arr[1] === '00' && arr[0] === '00'){
+        steps = 0
+    }
+	return steps+1
 }
-// console.log(microwaveButtons('00:00'))
-//microwaveButtons("00:30") ➞ 2
 
+
+//5 --- Neutralisation
+function neutralise(s1, s2) {
+	let newStr = ''
+	for (let i = 0; i < s1.length; i++){
+		if (s1[i] === s2[i]){
+			newStr += s1[i]
+		}
+		else if(s1[i] !== s2[i]){
+			newStr += '0'
+		}
+	}
+	return newStr
+}
+
+
+//6 --- Equality of 3 Values
+/*
+Create a function that takes three integer arguments (a, b, c) and returns the amount of 
+integers which are of equal value.
+*/
+function equal(a, b, c) {
+	//if only 2 value equal each others we return 2
+	//if there is no equality at all we return 0
+	//if all the values equals each others we return 3
+    let eqs = 0
+    let arr = [a, b, c]
+	
+    let set = [...new Set(arr)]
+    if (set.length === 2){
+        eqs = 2
+    }
+    else if (set.length === 1){
+        eqs = 3
+    }
+    
+    return eqs
+}
+
+
+//7 --- Iterated Square Root
+/*
+The iterated square root of a number is the number of times the square root function must 
+be applied to bring the number strictly under 2.
+Given an integer, return its iterated square root. Return "invalid" if it is negative.
+*/
+function iSqrt(n) {
+    let t = 0
+    let count = 0
+    
+    if (n < 0) return 'invalid'
+	while (n >= 2){
+        t = Math.sqrt(n)
+        n = t
+        count++
+    }
+    return count
+}
+console.log(iSqrt(27))
 
