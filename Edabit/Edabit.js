@@ -128,5 +128,11 @@ function iSqrt(n) {
     }
     return count
 }
-console.log(iSqrt(27))
 
+
+
+//8 --- Solving Exponential Equations With Logarithms
+function solveForExp(a, b) {
+	return Math.log(b)/Math.log(a)
+}
+console.log(solveForExp(2, 1024))

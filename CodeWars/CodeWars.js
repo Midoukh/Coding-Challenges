@@ -21,58 +21,55 @@ var moveZeros = function (arr) {
   }
   
   
-  // 2 --- The observed PIN
-  function getPINs(observed) {
-    // TODO: This is your job, detective!
-    const combs = [];
-    observed = observed.toString()
-
-    let one = ['1', '2', '4']
-    let three = ['3', '2', '6']
-    let five = ['5', '4', '8', '2', '6']
-    let seven = ['7', '4', '8']
-
-    let len = one.length * three.length * five.length * seven.length
-
-//    for (let i = 0; i < one.length; i++){
-//       let number = observed[i]
-
-//       if (number === '1'){
-//         combs.push(observed, observed.replace(number, one[1]), observed.replace(number, one[2]))
-        
-//       }
-//    }
-//    for (let i = 0; i < three.length; i++){
-//     let number = observed[i]
-
-//     if (number === '3'){
-//       combs.push(observed.replace(number, three[1]), observed.replace(number, three[2]), observed.replace(number, three[0]))
-      
-//     }
-//  }
-      for (let i = 0; i < len; i++){
-        let number = observed[i]
-
-              if (number === '1'){
-                combs.push(observed, observed.replace(number, one[1]), observed.replace(number, one[2]))
-                
-              }
-              if (number === '3'){
-                      combs.push(observed.replace(number, three[1]), observed.replace(number, three[2]), observed.replace(number, three[0]))
-                      
-              }
-              if (number === '5'){
-                combs.push(observed.replace(number, five[1]), observed.replace(number, five[2]), observed.replace(number, five[0])
-                , observed.replace(number, five[3]), observed.replace(number, five[4]))
-                
-              }
-              if (number === '7'){
-                combs.push(observed.replace(number, seven[1]), observed.replace(number, seven[2]), observed.replace(number, seven[0]))
-                
-              }
-      }
-    return combs
-  }
-  console.log(getPINs(1375))
-
   
+  //2 --- Rot13
+  /*
+  ROT13 is a simple letter substitution cipher that replaces a letter with the letter 13 letters
+   after it in the alphabet. ROT13 is an example of the Caesar cipher.
+  */
+  
+//replace a letter
+// a letter with the letter 13 letters after it in the alphabet
+function rot13(message) {
+  const alphabets = "abcdefghijklmnopqrstuvwxyz";
+  const regEx = /[a-z]/i;
+  if (message.length === 0) return 
+  let newL = message;
+  let cipher = message
+    .split('').map((l, i) => {
+      l = l.toLowerCase()
+      let indexOfLetter = alphabets.indexOf(l) + 13;
+      indexOfLetter > 26 ? (indexOfLetter -= 26) : indexOfLetter;
+
+      if (regEx.test(l)) {
+        l = alphabets[indexOfLetter];
+      }
+      return l;
+    })
+    .join("");
+
+  for (let i = 0; i < cipher.length; i++) {
+    if (newL[i] === newL[i].toLowerCase()) {
+      cipher = cipher.replace(cipher[i], cipher[i].toLowerCase())
+    } else if (newL[i] === newL[i].toUpperCase()) {
+      cipher = cipher.replace(cipher[i], cipher[i].toUpperCase())
+    }
+  }
+ return cipher
+}
+console.log(rot13('ABCDEFGHIJKLMNOPQRSTUVWXYZ'))
+// let countdown;
+// function timer(seconds){
+//   let now = Date.now()
+//   let then = now + seconds*1000 
+//   countdown = setInterval(() => {
+//     let secondsLeft = Math.round((then - Date.now())/1000)
+//     secondsLeft--
+//     console.log(secondsLeft)
+//     if (secondsLeft <= 0) clearInterval(countdown)
+    
+//   }, 1000)
+// }
+
+
+
