@@ -57,19 +57,38 @@ function rot13(message) {
   }
  return cipher
 }
-console.log(rot13('ABCDEFGHIJKLMNOPQRSTUVWXYZ'))
-// let countdown;
-// function timer(seconds){
-//   let now = Date.now()
-//   let then = now + seconds*1000 
-//   countdown = setInterval(() => {
-//     let secondsLeft = Math.round((then - Date.now())/1000)
-//     secondsLeft--
-//     console.log(secondsLeft)
-//     if (secondsLeft <= 0) clearInterval(countdown)
-    
-//   }, 1000)
-// }
 
 
+//3 --- Simple Pig Latin
+function pigIt(str){
+  //Code here
+  const regex = /[a-z]/i
+  return str.split(' ').map(word => {
+    if (regex.test(word)){
+      word = word.slice(1) + word.slice(0, 1) + "ay" 
+    }
+    return word
+  }).join(' ')
+}
+
+
+//4 --- Detect Pangram
+/*
+A pangram is a sentence that contains every single letter of the alphabet at least once.
+For example,
+the sentence "The quick brown fox jumps over the lazy dog" is a pangram,
+because it uses the letters A-Z at least once (case is irrelevant).
+*/
+function isPangram(string){
+ 
+  const alpabets = 'abcdefghijklmnopqrstuvwxyz';
+  const symbols = /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/
+  const newString = string
+  .split('')
+  .filter(el => el !== " " && isNaN(el) && !symbols.test(el))
+  .map(el => el = el.toLowerCase()).join('')
+  
+  return alpabets.split('').every(x => newString.includes(x))
+
+}
 
