@@ -187,3 +187,73 @@ function extractingQuantity(arr) {
     .replace('<qty>', '')
     .replace('</qty>', '')
 }
+
+//8 --- Is it a Set?
+/*
+set! is a card game where you compete with other players, to find out who can find a set of cards first.
+Your task is to write a function that checks if a collection of three input cards qualifies as a set.
+*/
+function isValidSet(quantities, shapes, colours, patterns) {
+
+  let first = quantities[0]
+  const checkingQuantitiesSame = quantities.every(x => x === first)
+  const checkingQuantitiesDiff = first !== quantities[1] && first !== quantities[2]
+    && quantities[1] !== quantities[2]
+  let second = shapes[0]
+  const checkingShapesSame = shapes.every(x => x === second)
+  const checkingShapesDiff = second !== shapes[1] && second !== shapes[2]
+    && shapes[1] !== shapes[2]
+
+  let third = colours[0]
+  const checkingColiursSame = colours.every(x => x === third)
+  const checkingColiursDiff = third !== colours[1] && third !== colours[2]
+    && colours[1] !== colours[2]
+
+  let fourth = patterns[0]
+  const checkingPatternsSame = patterns.every(x => x === fourth)
+  const checkingPatternsDiff = fourth !== patterns[1] && fourth !== patterns[2]
+    && patterns[1] !== patterns[2]
+
+  if ((checkingQuantitiesDiff || checkingQuantitiesSame) &&
+    (checkingShapesDiff || checkingShapesSame) &&
+    (checkingColiursSame || checkingColiursDiff) &&
+    (checkingPatternsSame || checkingPatternsDiff)) {
+    return true
+  }
+  else {
+    return false
+  }
+}
+
+//9 --- valid Message
+function isAValidMessage(message){
+  // your code
+  if (message === '') return true
+  if (!isNaN(message[message.length-1])) return false
+  const regex = /\d+[a-z]+/gi
+  
+  const arr =  message.match(regex)
+  const isValid = arr.every(x => {
+    const { digit, word } = splitNumAndStr(x)
+    if (parseInt(digit) === word.length) return true
+  })
+  
+  return isValid
+}
+function splitNumAndStr(str){
+  let digit = '', word = ''
+  for (let i = 0; i < str.length; i++){
+    if (!isNaN(str[i])){
+      digit += str[i]
+    }
+    else{
+      word += str[i]
+    }
+  }
+  return{
+    digit,
+    word
+  }
+}
+
+console.log(isAValidMessage('3hey5hello2hi5'))
