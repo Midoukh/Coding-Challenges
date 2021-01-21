@@ -256,4 +256,61 @@ function splitNumAndStr(str){
   }
 }
 
+//10 --- Error correction #1 - Hamming Code
+/*
+Background information
+The Hamming Code is used to correct errors, so-called bit flips, in data transmissions. Later in the description follows a detailed explanation of how it works.
+In this Kata we will implement the Hamming Code with bit length 3; this has some advantages and disadvantages:
+
+[ + ] It's simple to implement
+[ + ] Compared to other versions of hamming code, we can correct more mistakes
+[ - ] The size of the input triples
+*/
+
+//encode
+function encode(text) {
+  const bits = []
+  
+  for (let i = 0; i < text.length; i++){
+    bits.push(text.charCodeAt(i))
+  }
+  console.log(bits)
+  //triple each bit 3 times
+  return bits.map(bit => (bit.toString(2) + '').padStart(8, '0'))
+  .map(bit => {
+    return bit.split('').map(bit => {
+      bit = bit + bit + bit
+      return bit
+    }).join('')
+  }).join('');
+}
+
+//decode
+function decode(bits) {
+  const regex = /\d{1,3}/g
+  const regex2 = /\d{1,8}/g
+
+  //to triples
+  const ascii = bits
+  const correctedBits = bits.match(regex).map(char => {
+    //check the most occured characters and replace it with one
+    //for example 001 => 0 because 0 is the most occured characters
+    let zeros = '', ones = '';
+   
+    char.split('').forEach(char => {
+      if (char === '1'){
+        ones += char
+      }
+      else if (char === '0'){
+        zeros += char
+      }
+    })
+     return zeros.length > ones.length? '0':'1'
+  }).join('')
+
+  const backToNormal = correctedBits.match(regex2).map(byte => String.fromCharCode(parseInt(byte, 2))).join('')
+
+  return backToNormal
+}
+
 console.log(isAValidMessage('3hey5hello2hi5'))
